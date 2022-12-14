@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h3 class="page-header">Registro</h3>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-danger">
+            {{ messages[0] }}. Vá para <a href="{{ url_for('login') }}">página de login</a>.
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="post" action="/signup/">
+            <div class="form-group has-feedback">
+                <label for="id_name_restaurant">Nome do restaurante</label>
+                <input type="text" name="name_restaurant" id="id_name_restaurant" class="form-control"
+                       placeholder="Name Restaurant" required
+                       autofocus>
+            </div>
+            <div class="form-group has-feedback">
+                <label for="id_email">Email</label>
+                <input type="email" name="email" id="id_email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group has-feedback">
+                <label for="id_password1">Senha</label>
+                <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Password"
+                       required>
+            </div>
+            <div class="form-group has-feedback">
+                <label for="id_password2">Confirmar Senha</label>
+                <input type="password" name="password2" id="id_password2" class="form-control"
+                       placeholder="Confirm Password"
+                       required>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <a class="btn btn-default btn-block btn-flat"
+                       href="javascript:window.history.back()"> Voltar</a>
+                </div>
+                <div class="col-xs-6">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat"> Registrar</button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script>
+    $(document).ready(function () {
+        $('.signup-page').addClass('active');
+    });
+</script>
+
+{% endblock %}

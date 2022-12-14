@@ -15,7 +15,11 @@ Para rodar a aplicação você deverá seguir os passos abaixo.
 2 - Rode a criacao da database
 
 ```bash
-  flask init-db
+flask db init
+
+flask db migrate -m "Initial migration."
+
+flask db upgrade
 ```
 
 3 - Configure as variaveis de ambiente
@@ -48,4 +52,6 @@ Por favor, siga o `código de conduta` desse projeto.
 ## Licença
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+
 

@@ -1,147 +1,76 @@
-﻿<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+﻿{% extends "bootstrap/base.html" %}
+{% block title %}Menu Hub{% endblock %}
 
-    <link href="{{ url_for('default/css', filename='bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('default/css', filename='style.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ url_for('default/css/', filename='sweetalert.min.css') }} ">
-    <link rel="stylesheet" type="text/css"
-          href="{{ url_for('default/css/', filename='datatables.min.css') }}"/>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.15/css/froala_editor.min.css"
-          integrity="sha512-RGHWQr3WNYsciqxQFOvD3QYN/hvkRs/URUnveyJJXxJzVE3ewAu3/mmIT6dHucDi5D+tw8dqSdAmR2joTXEX1w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-
-    <style>
-        .nav-sidebar {
-            width: 100%;
-            padding: 8px 0;
-            border-right: 1px solid #ddd;
-        }
-
-        .nav-sidebar a {
-            color: #333;
-            -webkit-transition: all 0.08s linear;
-            -moz-transition: all 0.08s linear;
-            -o-transition: all 0.08s linear;
-            transition: all 0.08s linear;
-            -webkit-border-radius: 4px 0 0 4px;
-            -moz-border-radius: 4px 0 0 4px;
-            border-radius: 4px 0 0 4px;
-        }
-
-        .nav-sidebar .active a {
-            cursor: default;
-            background-color: #428bca;
-            color: #fff;
-            text-shadow: 1px 1px 1px #666;
-        }
-
-        .nav-sidebar .active a:hover {
-            background-color: #428bca;
-        }
-
-        .nav-sidebar .text-overflow a,
-        .nav-sidebar .text-overflow .media-body {
-            white-space: nowrap;
-            overflow: hidden;
-            -o-text-overflow: ellipsis;
-            text-overflow: ellipsis;
-        }
-
-        /* Right-aligned sidebar */
-        .nav-sidebar.pull-right {
-            border-right: 0;
-            border-left: 1px solid #ddd;
-        }
-
-        .nav-sidebar.pull-right a {
-            -webkit-border-radius: 0 4px 4px 0;
-            -moz-border-radius: 0 4px 4px 0;
-            border-radius: 0 4px 4px 0;
-        }
-    </style>
-    <script src="{{ url_for('default/css/', filename='jquery.min.js') }}"></script>
-</head>
-<body>
-
-<nav class="navbar navbar-inverse navbar-fixed-top">
+{% block navbar %}
+<nav class="navbar navbar-default">
     <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"> MenuHub </a>
+            <a class="navbar-brand" href="/">Menu Hub</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                {% if g.user %}
-                    <li><a href="">Olá, {{ g.user['username'] }}</a></li>
-                    <li><a href="{{ url_for('auth.logout') }}">Sair</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="home-page">
+                    <a href="{{ url_for('index') }}" class="navbar-item">
+                        Início
+                    </a>
+                </li>
+                {% if not current_user.is_authenticated %}
+                <li class="login-page">
+                    <a href="{{ url_for('login') }}" class="navbar-item">
+                        Login
+                    </a>
+                </li>
+                <li class="signup-page">
+                    <a href="{{ url_for('signup') }}" class="navbar-item">
+                        Registrar
+                    </a>
+                </li>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('logout') }}" class="navbar-item">
+                        Logout
+                    </a>
+                </li>
                 {% endif %}
             </ul>
-        </div>
-    </div>
+            {% if current_user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="navbar-item">
+                        <i class="fa fa-user"></i>
+                        Olá, {{ name }}!
+                    </a>
+                </li>
+            </ul>
+            {% endif %}
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>
+{% endblock %}
 
-<div id="main" class="container-fluid" style="margin-top: 50px">
-    <div class="col-sm-12">
-        {% block content %}
+<div class="container-fluid">
+    {% block content %}
 
-        {% endblock %}
-    </div>
-    <br/>
+    {% endblock %}
+</div>
+{% block scripts %}
+{{super()}}
 
-</div> <!-- /#main -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-
-{% if get_flashed_messages() %}
-    {% for message in get_flashed_messages() %}
-        {% if message.tags == 'error' %}
-            <script>
-                $(document).ready(function () {
-                    swal("Erro", "{{ message }}", "error")
-                });
-            </script>
-        {% else %}
-            <script>
-                $(document).ready(function () {
-                    swal("Sucesso", "{{ message }}", "success")
-                });
-            </script>
-        {% endif %}
-    {% endfor %}
-{% endif %}
-
-<script src="{{ url_for('default/js', filename='jquery.min.js') }}"></script>
-<script src="{{ url_for('default/js', filename='bootstrap.min.js') }}"></script>
-
-<script type="text/javascript" src="{{ url_for('default/js', filename='sweetalert.min.js') }}"></script>
-
-<script type="text/javascript" src="{{ url_for('default/js', filename='datatables.min.js') }}"></script>
-
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% endblock %}
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.15/js/froala_editor.min.js"
-        integrity="sha512-7+R12cvCgVoLAkdGDnu3v4VQOWtJJPcl3nRfjYpJfPQ4/ghiVDQKkSaXLDXdwndRCtBtFiZa6ybArSiqzii3QA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/image.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/image_manager.min.js"></script>
-
-</body>
-</html>

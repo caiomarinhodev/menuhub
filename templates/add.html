@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <h3 class="page-header">Adicionar Prato</h3>
+        <form method="post" action="/add/">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Nome do Prato:</label>
+                            <input type="text" name="name" class="form-control" placeholder="Nome do prato" required
+                                   value="{{ request.form['name'] }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria:</label>
+                            <select name="category" class="form-control" required>
+                                <option value="entrada">Entrada</option>
+                                <option value="principal">Prato Principal</option>
+                                <option value="sobremesa">Sobremesa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Valor:</label>
+                            <input type="text" name="price" class="form-control" placeholder="Valor" required
+                                   value="{{ request.form['price'] }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição do prato:</label>
+                            <textarea name="description" class="form-control" required>
+                                {{ request.form['description'] }}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div id="actions" class="row">
+                        <div class="col-xs-6">
+                            <a href="{{url_for('index')}}" class="btn btn-default">Voltar</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <button id="btn_salvar" class="btn btn-primary pull-right" type="submit">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,2 +1,7 @@
 Flask
 pytest
+flask-bootstrap
+black
+Flask-SQLAlchemy==3.0.2
+flask-migrate
+flask-login
